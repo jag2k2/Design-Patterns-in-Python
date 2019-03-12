@@ -6,6 +6,7 @@ class Equipment(ABC):
 
     def __init__(self, name: str)->None:
         self._name = name
+        self._parent: "Equipment" = None
 
     def add(self, component: "Equipment")->None:
         raise Exception("Cannot add components to leaves")
@@ -15,6 +16,15 @@ class Equipment(ABC):
 
     def name(self)->str:
         return self._name
+
+    def set_parent(self, parent: "Equipment")->None:
+        self._parent: "Equipment" = parent
+
+    def clear_parent(self)->None:
+        self._parent = None
+
+    def get_parent(self)->"Equipment":
+        return self._parent
 
     @abstractmethod
     def power(self)->int:
@@ -33,9 +43,11 @@ class EquipGroup(Equipment):
 
     def add(self, component: "Equipment")->None:
         self._equip_list.append(component)
+        component.set_parent(self)
 
     def remove(self, component: "Equipment")->None:
         self._equip_list.remove(component)
+        component.clear_parent()
 
     def power(self)->int:
         power_sum: int = 0
@@ -66,8 +78,8 @@ comp2 = Floppy("floppy2")
 comp3 = Floppy("floppy3")
 comp4 = Floppy("floppy4")
 comp5 = Floppy("floppy5")
-chassis1 = EquipGroup("composite1")
-chassis2 = EquipGroup("composite2")
+chassis1 = EquipGroup("chassis1")
+chassis2 = EquipGroup("chassis2")
 
 chassis1.add(comp1)
 chassis1.add(comp2)
@@ -92,6 +104,16 @@ print(comp1.net_price())
 print(comp4.net_price())
 print(chassis2.net_price())
 print(chassis1.net_price())
+
+print(comp5.get_parent().name())
+print(chassis2.get_parent().name())
+
+chassis2.remove(comp5)
+try:
+    print(comp5.get_parent().name())
+except Exception as err:
+    print(err)
+    
 
 
 
