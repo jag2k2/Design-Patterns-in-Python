@@ -25,7 +25,7 @@ class Equipment(ABC):
         pass
 
 
-class CompositeEquipment(Equipment):
+class EquipGroup(Equipment):
 
     def __init__(self, name: str)->None:
         super().__init__(name)
@@ -66,32 +66,32 @@ comp2 = Floppy("floppy2")
 comp3 = Floppy("floppy3")
 comp4 = Floppy("floppy4")
 comp5 = Floppy("floppy5")
-group1 = CompositeEquipment("composite1")
-group2 = CompositeEquipment("composite2")
+chassis1 = EquipGroup("composite1")
+chassis2 = EquipGroup("composite2")
 
-group1.add(comp1)
-group1.add(comp2)
-group1.add(group2)
-group2.add(comp3)
-group2.add(comp4)
-group2.add(comp5)
+chassis1.add(comp1)
+chassis1.add(comp2)
+chassis1.add(chassis2)
+chassis2.add(comp3)
+chassis2.add(comp4)
+chassis2.add(comp5)
 
 print(comp1.net_price())
 print(comp4.net_price())
-print(group2.net_price())
-print(group1.net_price())
+print(chassis2.net_price())
+print(chassis1.net_price())
 print("")
 
 try:
     comp1.add(comp2)
 except Exception as err:
     print(err)
-group2.remove(comp3)
+chassis2.remove(comp3)
 
 print(comp1.net_price())
 print(comp4.net_price())
-print(group2.net_price())
-print(group1.net_price())
+print(chassis2.net_price())
+print(chassis1.net_price())
 
 
 
