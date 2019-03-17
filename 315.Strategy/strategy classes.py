@@ -11,7 +11,7 @@ class Coord:
 
 class Compositor(ABC):
 
-    @abstractmethod              # the method is called within the composition and the parameters are calculated there
+    @abstractmethod  # the method is called within the composition and the parameters are calculated there
     def compose(self, component_count: int) -> int:
         pass
 
@@ -44,6 +44,6 @@ class Composition:
         self._strategy.compose(len(self._components))
 
 
-alg: Compositor = TeX()
-structure: Composition = Composition(alg)
+alg: Compositor = TeX()  # instantiate a concrete algorithm
+structure: Composition = Composition(alg)  # instantiate a data object and pass it the algorithm
 structure.repair()
