@@ -38,10 +38,9 @@ class Composition:
 
     def __init__(self, strategy: Compositor):
         self._strategy: Compositor = strategy
-        self._components: List[str] = []
+        self._components: List[str] = ["Big Bear", "Mama Bear", "Baby Bear"]
 
     def repair(self) -> None:
-        self._components = ["Big Bear", "Mama Bear", "Baby Bear"]
         self._strategy.compose(len(self._components))
 
 
