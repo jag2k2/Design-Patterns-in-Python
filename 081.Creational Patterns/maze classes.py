@@ -19,7 +19,7 @@ class MapSite(ABC):
 class Room(MapSite):
 
     _room_num: int
-    _sides: List[MapSite]
+    _sides: List[MapSite] = []
 
     def __init__(self, room_no: int)->None:
         self._room_num = room_no
@@ -27,7 +27,7 @@ class Room(MapSite):
     def get_room_no(self)->int:
         return self._room_num
 
-    def get_side(self, direction:Direction)->None:
+    def get_side(self, direction: Direction)->None:
         # print("Getting side for " + str(self._room_num) + " in the " + str(direction) + " direction")
         pass
 
@@ -63,7 +63,8 @@ class Door(MapSite):
 
 class Maze:
 
-    _room_list: [Room] = []
+    def __init__(self) -> None:
+        self._room_list: [Room] = []
 
     def add_room(self, room: Room)->None:
         self._room_list.append(room)
@@ -77,8 +78,6 @@ class Maze:
 
 class MazeGame:
 
-    _maze_main: Maze
-
     '''
     The factory method is below.  
     
@@ -90,6 +89,10 @@ class MazeGame:
     
     
     '''
+
+    def __init__(self)->None:
+        self._maze_main = None
+
     def create_maze(self)->Maze:        # this is the factory method!
         self._maze_main = Maze()
         r1: Room = Room(1)
