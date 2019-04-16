@@ -18,8 +18,19 @@ class Point:
 class Window(ABC):
 
     def __init__(self) -> None:
-        self._imp: WindowImp = None
+        self._imp: WindowImp = PMWindowImp()
+        self._imp = None
+        self._imp = self.get_window_imp()
 
+    def get_window_imp(self) -> "WindowImp":
+        if self._imp is None:
+            print("Creating implementation class")
+            return PMWindowImp()
+        else:
+            print("Using stored implementation class")
+            return self._imp
+
+    # This method uses a composed class to bridge the Window interface to the WindowImp interface
     def draw_rect(self, a: Point, b: Point) -> None:
         self._imp.draw_dev_rectangle(a.get_x(), a.get_y(), b.get_x(), b.get_y())
 
@@ -42,11 +53,17 @@ class WindowImp(ABC):
 class XWindowImp(WindowImp):
 
     def draw_dev_rectangle(self, a: int, b: int, c: int, d: int) -> None:
-        print("Drawing rectangle for Xwin")
+        print("Drawing rectangle for Xwin from " + str(a) + "," + str(b) + " to " + str(c) + "," + str(d))
 
 
 class PMWindowImp(WindowImp):
     def draw_dev_rectangle(self, a: int, b: int, c: int, d: int) -> None:
-        print("Drawing rectangle for PMWin")
+        print("Drawing rectangle for PMWin from " + str(a) + "," + str(b) + " to " + str(c) + "," + str(d))
 
 
+p1 = Point(1, 2)
+p2 = Point(3, 4)
+
+win_obj = ApplicationWindow()
+win_obj.get_window_imp()
+win_obj.draw_rect(p1, p2)

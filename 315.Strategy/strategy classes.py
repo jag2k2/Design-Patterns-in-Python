@@ -9,41 +9,48 @@ class Coord:
         self._y = y
 
 
-class Compositor(ABC):
+class StrategyInterface(ABC):
 
     @abstractmethod  # the method is called within the composition and the parameters are calculated there
-    def compose(self, component_count: int) -> int:
+    def execute(self, component_count: int) -> int:
         pass
 
 
-class Simple(Compositor):
-    def compose(self, component_count: int) -> int:
-        print("Performing simple algorithm on " + str(component_count) + " components")
+class Simple(StrategyInterface):
+    def execute(self, component_count: int) -> int:
+        print("Performing Simple algorithm on " + str(component_count) + " components")
         return 0
 
 
-class TeX(Compositor):
-    def compose(self, component_count: int) -> int:
+class TeX(StrategyInterface):
+    def execute(self, component_count: int) -> int:
         print("Performing TeX algorithm on " + str(component_count) + " components")
         return 1
 
 
-class Array(Compositor):
-    def compose(self, component_count: int) -> int:
-        print("Performing TeX algorithm on " + str(component_count) + " components")
+class Array(StrategyInterface):
+    def execute(self, component_count: int) -> int:
+        print("Performing Array algorithm on " + str(component_count) + " components")
         return 2
 
 
-class Composition:
+class DataObject:
 
-    def __init__(self, strategy: Compositor):
-        self._strategy: Compositor = strategy
+    def __init__(self) -> None:
+        self._strategy = None
         self._components: List[str] = ["Big Bear", "Mama Bear", "Baby Bear"]
 
+    def set_alg(self, strategy: StrategyInterface):
+        self._strategy = strategy
+
     def repair(self) -> None:
-        self._strategy.compose(len(self._components))
+        self._strategy.execute(len(self._components))
 
 
-alg: Compositor = TeX()  # instantiate a concrete algorithm
-structure: Composition = Composition(alg)  # instantiate a data object and pass it the algorithm
+algorithm1 = Array()  # instantiate a concrete algorithm
+algorithm2 = Simple()  # instantiate a second concrete algorithm
+structure = DataObject()  # instantiate a data object
+structure.set_alg(algorithm1)
+structure.repair()
+structure.set_alg(algorithm2)
 structure.repair()

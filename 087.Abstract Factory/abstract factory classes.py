@@ -108,7 +108,7 @@ class MazeFactory(ABC):
 class BombedFactory(MazeFactory):
 
     @staticmethod
-    def make_wall()->Wall:
+    def make_wall() -> Wall:
         return BombedWall()
 
 
