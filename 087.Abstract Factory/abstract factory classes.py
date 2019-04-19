@@ -115,7 +115,7 @@ class BombedFactory(MazeFactory):
 class EnchantedFactory(MazeFactory):
 
     @staticmethod
-    def make_wall()->Wall:
+    def make_wall() -> Wall:
         return EnchantedWall()
 
 

@@ -18,17 +18,7 @@ class Point:
 class Window(ABC):
 
     def __init__(self) -> None:
-        self._imp: WindowImp = PMWindowImp()
-        self._imp = None
-        self._imp = self.get_window_imp()
-
-    def get_window_imp(self) -> "WindowImp":
-        if self._imp is None:
-            print("Creating implementation class")
-            return PMWindowImp()
-        else:
-            print("Using stored implementation class")
-            return self._imp
+        self._imp = WinImpFactory().make_imp("PM")  # Abstract Factory class to create appropriate imp class
 
     # This method uses a composed class to bridge the Window interface to the WindowImp interface
     def draw_rect(self, a: Point, b: Point) -> None:
@@ -61,9 +51,19 @@ class PMWindowImp(WindowImp):
         print("Drawing rectangle for PMWin from " + str(a) + "," + str(b) + " to " + str(c) + "," + str(d))
 
 
+class WinImpFactory(ABC):
+
+    @staticmethod
+    def make_imp(platform: str):
+        if platform == "PM":
+            return PMWindowImp()
+        elif platform == "XWin":
+            return XWindowImp()
+        else:
+            return None
+
+
 p1 = Point(1, 2)
 p2 = Point(3, 4)
 
-win_obj = ApplicationWindow()
-win_obj.get_window_imp()
-win_obj.draw_rect(p1, p2)
+ApplicationWindow().draw_rect(p1, p2)
