@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                bat "env"
+                bat "set"
             }
         }
         stage('Test') {
